@@ -21,7 +21,7 @@ public abstract class Button implements Tickable {
 	
 	@Override
 	public void tick() {
-		if(Gdx.input.isTouched() && isClicked()) onClick();
+		if(Gdx.input.justTouched() && isClicked()) onClick();
 	}
 
 	public boolean isClicked() {

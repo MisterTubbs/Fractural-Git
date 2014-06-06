@@ -29,4 +29,8 @@ public class MainMenu implements Screen {
 	public Color getClearColor() {
 		return Color.BLACK;
 	}
+
+	@Override
+	public void renderText(SpriteBatch textBatch) {
+	}
 }

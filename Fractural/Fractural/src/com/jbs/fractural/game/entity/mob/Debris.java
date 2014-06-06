@@ -1,5 +1,6 @@
 package com.jbs.fractural.game.entity.mob;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.jbs.fractural.Constants;
 import com.jbs.fractural.Main;
 import com.jbs.fractural.assets.Assets;
@@ -15,7 +16,7 @@ public class Debris extends TexturedMob {
 	}
 	
 	public Debris(float x, float y, float w, float h) {
-		super(getDebrisTexture(), x, y, w, h);
+		super(getDebrisTexture(), x, y, w, h, new Rectangle(x, y - 20, Lane.laneWidth, h));
 	}
 
 	private static TextureAsset getDebrisTexture() {

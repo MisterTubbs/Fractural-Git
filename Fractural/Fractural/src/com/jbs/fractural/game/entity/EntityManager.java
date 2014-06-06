@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jbs.fractural.Collidable;
 import com.jbs.fractural.GameObject;
 import com.jbs.fractural.Renderable;
 import com.jbs.fractural.game.entity.mob.Player;
@@ -39,6 +40,8 @@ public class EntityManager implements GameObject {
 		while(e.hasNext()) {
 			Entity entity = e.next();
 			entity.tick();
+			if(entity instanceof Collidable)
+				((Collidable) entity).isColliding(entities);
 			if(!entity.isAlive()) {
 				entity.destroy();
 				e.remove();

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.jbs.fractural.assets.Assets;
@@ -15,12 +16,13 @@ public class Main implements ApplicationListener, Tickable {
 	
 	public static final Vector2 screenSize = new Vector2(1280, 720);
 	public static final Vector2 centered = new Vector2(screenSize.x / 2, screenSize.y / 2);
-	public static OrthographicCamera camera; 
+	public static OrthographicCamera camera, textCamera; 
 	public static Main activeGame;
 	public static Vector2 actualScreenSize;
 	public static float aspectRatio;
+	public static BitmapFont font;
 	
-	private SpriteBatch batch;
+	private SpriteBatch batch, textBatch;
 	private Color currentClearColor;
 	private GameObject currentState;
 
@@ -32,14 +34,21 @@ public class Main implements ApplicationListener, Tickable {
 		activeGame = this;
 		
 		actualScreenSize = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
 		aspectRatio = screenSize.y / screenSize.x;
 		camera = new OrthographicCamera(actualScreenSize.x, actualScreenSize.x * aspectRatio);
 		camera.setToOrtho(false, (int) screenSize.x, (int) screenSize.y);
-		camera.zoom = 1.5f;
+
+		textCamera = new OrthographicCamera(actualScreenSize.x, actualScreenSize.x * aspectRatio);
+		textCamera.setToOrtho(false, (int) screenSize.x, (int) screenSize.y);
+		
 		currentState = new MainMenu();
 		currentClearColor = Color.BLACK;
 		
+		font = new BitmapFont(Gdx.files.internal("fonts/gameFont.fnt"), Gdx.files.internal("fonts/gameFont.png"), false);
+		
 		batch = new SpriteBatch();
+		textBatch = new SpriteBatch();
 	}
 
 	@Override
@@ -58,6 +67,14 @@ public class Main implements ApplicationListener, Tickable {
 		batch.begin();
 		currentState.render(batch);
 		batch.end();
+		
+		if(currentState instanceof Screen) {
+			textCamera.update();
+			textBatch.setProjectionMatrix(textCamera.combined);
+			textBatch.begin();
+			((Screen) currentState).renderText(textBatch);
+			textBatch.end();
+		}
 	}
 
 

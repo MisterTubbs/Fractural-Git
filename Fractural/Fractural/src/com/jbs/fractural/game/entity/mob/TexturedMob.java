@@ -1,8 +1,8 @@
 package com.jbs.fractural.game.entity.mob;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.jbs.fractural.assets.TextureAsset;
-import com.jbs.fractural.game.Game;
 
 public class TexturedMob extends Mob {
 
@@ -13,8 +13,13 @@ public class TexturedMob extends Mob {
 		this.texture = texture;
 	}
 	
+	public TexturedMob(TextureAsset texture, float x, float y, float w, float h, Rectangle boundingBox) {
+		super(x, y, w, h, boundingBox);
+		this.texture = texture;
+	}
+	
 	@Override
 	public void render(SpriteBatch batch) {
-		batch.draw(texture.getTexture(), getX(), getY(), getWidth() * Game.xScale, getHeight());
+		batch.draw(texture.getTexture(), getX(), getY(), getWidth(), getHeight());
 	}
 }

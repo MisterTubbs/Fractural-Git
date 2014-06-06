@@ -27,7 +27,7 @@ public class InputProxy implements InputProcessor {
 	
 	public static boolean getTouchSide(float x) {
 		//true - left, false - right
-		return getTouch().x > x;
+		return getTouch().x > Main.centered.x;
 	}
 
 	public static void clean() {

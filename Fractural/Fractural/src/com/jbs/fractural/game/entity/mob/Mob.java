@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.jbs.fractural.Renderable;
-import com.jbs.fractural.game.Game;
 import com.jbs.fractural.game.entity.Entity;
 
 public class Mob extends Entity implements Renderable {
@@ -18,11 +17,17 @@ public class Mob extends Entity implements Renderable {
 		this.size = new Vector2(w, h);
 		this.boundingBox = new Rectangle(x, y, w, h);
 	}
+	
+	public Mob(float x, float y, float w, float h, Rectangle boundingBox) {
+		super(x, y);
+		this.size = new Vector2(w, h);
+		this.boundingBox = boundingBox;
+	}
 
 	@Override
 	public void tick() {
 		if(dirty) {
-			boundingBox.set(getX(), getY(), getWidth() * Game.xScale, getHeight());
+			boundingBox.set(getX(), getY(), getWidth(), getHeight());
 			dirty = false;
 		}
 	}
@@ -49,6 +54,14 @@ public class Mob extends Entity implements Renderable {
 
 	public void setSize(Vector2 size) {
 		this.size = size;
+	}
+	
+	public void setWidth(int width) {
+		size.x = width;
+	}
+	
+	public void setHeight(int height) {
+		size.y = height;
 	}
 	
 	public Rectangle getBoundingBox() {
